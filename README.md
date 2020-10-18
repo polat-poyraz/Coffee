@@ -28,7 +28,7 @@ tekli ve template yapısındaki sorgu toolu if else yapısını HTML e taşır.
 ismi query dir.
 Coffee.Query sorgu için mode propsu alır.
 ```<Coffee.Query mode={viewMode}>```  
-Coffee.query içerisindeki query prop u verilmiş divler üzerinden işlem yapar.
+Coffee.Query içerisindeki query prop u verilmiş divler üzerinden işlem yapar.
 ```html
 <Coffee.Query mode={viewMode}>
     <div query="">
@@ -58,8 +58,8 @@ veya text gibi küçük şeyler üzerinde sorgu yapacaksanız kullanmalısınız
 Coffee.Component ile tek satır ile hem sorgu hem render yapabiliriz.  
 ```<Coffee.Component mode={} if={} else={} />```
 Coffee.Component yine Coffee nin sorgu yapabilmesi için mode propunu alır.  
-if prop u mode true ise render edilir eğer mode false ise else içerisine gönderilen
-component render edilir.
+Aldığı mode prop u üzerinde, true ise if e verilen değeri false ise else ye verilen
+değeri return eder.
 örneğin;
 
 > yanlızca component render etmez
@@ -67,4 +67,3 @@ component render edilir.
 ```html
 <Coffee.Component mode={viewMode} if={<FirstComponent />} else={<LastComponent />} />
 ```
-Bu sayede tek satır ile renderladık .
