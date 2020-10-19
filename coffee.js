@@ -30,7 +30,6 @@ const Component = class Component extends React.Component {
     }
     render() {
         const result = this.props.mode ? this.props.if : this.props.else
-
         return result
     }
 }

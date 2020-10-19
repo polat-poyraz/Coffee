@@ -7,6 +7,7 @@ Coffee React deki karmaşıklıkları basitleştiren bir tool çantasıdır.
 ## Toollar
 1. [Query](#Query)
 2. [Component](#Component)
+3. [Class](#Class)
 
 
 ## Kullanım
@@ -22,7 +23,7 @@ Coffee deki toolları kullanmak için
 ```
 
 ## İçerik ve anlatım
-### query
+## Query
 Coffee deki toollardan birtaneside sorgu tooludur.
 tekli ve template yapısındaki sorgu toolu if else yapısını HTML e taşır.
 ismi query dir.
@@ -52,7 +53,7 @@ kullanım;
 ```
 Bu sayede dinamik sorgulamayı daha basit ve düzenli hale getirmiş olduk.
 
-### component
+## Component
 component tool u eğer if else ile sadece bir, iki component render etmek istiyorsanız
 veya text gibi küçük şeyler üzerinde sorgu yapacaksanız kullanmalısınız.
 Coffee.Component ile tek satır ile hem sorgu hem render yapabiliriz.  
@@ -66,4 +67,31 @@ değeri return eder.
 
 ```html
 <Coffee.Component mode={viewMode} if={<FirstComponent />} else={<LastComponent />} />
+```
+
+## Class
+```Coffee.Class({})```  
+Coffie.Class etiketlerdeki classları dinamik hale getirerek
+reahat şekilde class değişimleri yapabilmenizi sağlar.  
+Class bir fonkiyondur içerisine bir obje alır ve objenin içerisinde üç değer bulunur.  
+```mode``` ```querys``` ```classes```
+mode değişkenine kontrolu yapacağımız değişkeni veririz.  
+querys değişkenine mode için sorgu yapacağımımz değerleri veririz.  
+classes sorgular sonucu ortaya çıkacak class ların bulunduğu arraydir.
+mode değeri querys arrayındaki ilk değerle karşılaştırılır eğer ikiside aynı ise
+classes değişkenindeki ilk class return edilir sonra ikinciye geçilir yine oda anı ise classes den ikinci class return edilir.
+
+```javascript
+const TestClass = Coffee.Class({
+    mode: viewMode, // kontrol değişkeni
+    querys: [true, false], // sorgu itemleri
+    classes: [ // classlar
+        {class: 'first-class '}, // classların sonuna boşluk bırakınız.
+        {class: 'last-class '}
+    ]
+})
+
+<div className={`${TestClass} card-header xxs dsg`}>
+    Color Control
+</div>
 ```
