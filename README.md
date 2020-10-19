@@ -1,4 +1,4 @@
-# Coffee 1.0.0
+# Coffee 1.1.0
 Coffee React deki karmaşıklıkları basitleştiren bir tool çantasıdır.
 İçerisinde birsürü tool bulundurur.
 
