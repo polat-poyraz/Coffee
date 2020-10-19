@@ -53,7 +53,7 @@ Class.propTypes = {
 const Coffee = { 
     Query: Query,
     Component: Component,
-    Class: Class
+    Class: Class,
 }
 
 export default Coffee
