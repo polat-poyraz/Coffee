@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const Query = class Query extends React.Component {
     constructor(props) {
@@ -34,10 +35,25 @@ const Component = class Component extends React.Component {
     }
 }
 
+const Class = (props) => {
+    const {mode, querys, classes} = props
+
+    for (const i in querys){
+        if (mode === querys[i]){
+            return classes[i].class
+        }
+    }
+}
+
+Class.propTypes = {
+    querys: PropTypes.array.isRequired,
+    classes: PropTypes.array.isRequired
+}
 
 const Coffee = { 
     Query: Query,
-    Component: Component
+    Component: Component,
+    Class: Class
 }
 
 export default Coffee
