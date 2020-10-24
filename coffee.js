@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+const promise = new Promise((resolve, reject) => { resolve(); reject() })
 
 const Query = class Query extends React.Component {
     constructor(props) {
@@ -36,11 +37,13 @@ const Component = class Component extends React.Component {
 }
 
 const Class = (props) => {
-    const {mode, querys, classes} = props
+    const {mode, querys, classes, defaultClass} = props
 
     for (const i in querys){
         if (mode === querys[i]){
             return classes[i].class
+        } else {
+            return defaultClass
         }
     }
 }
@@ -50,10 +53,43 @@ Class.propTypes = {
     classes: PropTypes.array.isRequired
 }
 
-const Coffee = { 
-    Query: Query,
-    Component: Component,
-    Class: Class,
+const State = (getState) => {
+    const [state, setState] = useState(getState)
+
+    const updateState = (newState) => {
+        const cloneState = {}
+
+        promise.then(() => {
+            for (const stateProp in state){
+                for (const newProp in newState){
+                    if (newProp !== stateProp){
+                        cloneState[stateProp] = state[stateProp]
+                    } else {
+                        cloneState[stateProp] = newState[newProp]
+                    }
+
+                    if (state[newProp] === undefined) {
+                        cloneState[newProp] = newState[newProp]
+                    }
+                }
+            }
+
+        }).then(() => {
+            setState(cloneState)
+        })
+    }
+
+    return {
+        updateState,
+        state: state
+    }
+}
+
+const Coffee = {
+    Query,
+    Component,
+    Class,
+    State
 }
 
 export default Coffee

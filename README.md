@@ -8,6 +8,7 @@ Coffee React deki karmaşıklıkları basitleştiren bir tool çantasıdır.
 1. [Query](#Query)
 2. [Component](#Component)
 3. [Class](#Class)
+4. [State](#State)
 
 
 ## Kullanım
@@ -94,4 +95,70 @@ const TestClass = Coffee.Class({
 <div className={`${TestClass} card-header xxs dsg`}>
     Color Control
 </div>
+```
+
+## State
+Coffee.State React.js de kullanılan hook yapılarında çok değişkenli state kullanmayı sağlar.
+Hooklardaki state i tıpkı class yapılarındaki state gibi kullanırsınız.
+Tek bir State değişkeni üzerinden tüm değişkenlerinize ulaşabilir, değiştirmek istediklerinizi
+kolayca değiştirebilirsiniz. Coffee.State bir fonksiyondur ve çalıştırdığınız yerde
+parametre olarak ilk state in değerlerini girersiniz ve state yanlızca bir obje gönderilmelidir tüm değişkenler bu obje içerisinde tutulamlıdır.  
+Öncelikle Coffee.State i bir değişkene atayıp bu değişkenden bağzı parçalar çıkarmalıyız.
+```javascript
+const App = () => {
+    const stateConsumer = Coffee.State({
+        // state in alacığı ilk değerler
+        first: 'first variable',
+        last: 'last variable'
+    })
+
+    /* stateConsumer dan değişkenlere ulaşabilmek için state i,
+    değişkenleri değiştirebilmek için ise updateState i alıyoruz.
+    */
+    const { state, updateState } = stateConsumer
+
+    return (
+        <div id="App">
+            <h1>{
+                // kullanmak için
+                state.first
+            }</h1>
+        </div>
+    )
+}
+```
+Bu şekilde bir state oluşturduk ve state içerisinden bir değer aldık.
+peki bu değerleri nasıl güncelleyebiliriz?  
+stateConsumer değişkeninden aldığımız ``` updateState ``` fonksiyonu ile yapabiliriz.
+bu örnekde first değişkenini **updateState()** ile değiştirelim
+update ederken fonksiyone bir obje gönderilmeli
+> React.js class yapısındaki state ve setState mantığı ile aynı kullanıma sahiptir.
+
+```javascript
+const App = () => {
+    const stateConsumer = Coffee.State({
+        // state in alacığı ilk değerler
+        first: 'first variable',
+        last: 'last variable'
+    })
+
+    /* stateConsumer dan değişkenlere ulaşabilmek için state,
+    değişkenleri değiştirebilmek için ise updateState alıyoruz.
+    */
+    const { state, updateState } = stateConsumer
+
+    return (
+        <div id="App">
+            <button
+                onClick={() => updateState({first: 'Hello'})}
+            >
+                First variable update
+            </button>
+            <h1>{
+                // kullanmak için
+                state.first
+            }</h1>
+        </div>
+    )
+}
 ```
