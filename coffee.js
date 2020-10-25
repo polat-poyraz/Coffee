@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
 const promise = new Promise((resolve, reject) => { resolve(); reject() })
 
 class Query extends React.Component {
@@ -75,12 +74,7 @@ const Class = (props) => {
     }
 }
 
-Class.propTypes = {
-    querys: PropTypes.array.isRequired,
-    classes: PropTypes.array.isRequired
-}
-
-const State = (getState) => {
+const State = (getState, historyMode) => {
     const [state, updateState] = useState(getState)
 
     const setState = (newState) => {
@@ -93,10 +87,12 @@ const State = (getState) => {
                         cloneState[stateProp] = state[stateProp]
                     } else {
                         cloneState[stateProp] = newState[newProp]
+                        if(historyMode)setHistory(newProp, 'update', newState[newProp])
                     }
 
                     if (state[newProp] === undefined) {
                         cloneState[newProp] = newState[newProp]
+                        if(historyMode)setHistory(newProp, 'add', newState[newProp])
                     }
                 }
             }
@@ -106,9 +102,19 @@ const State = (getState) => {
         })
     }
 
+    const setHistory = (propName, mode, value) => {
+        const history = {}
+        
+        history['mode'] = mode
+        history['variable'] = propName
+        history['value'] = value
+
+        console.log(history)
+    }
+
     return {
         setState,
-        state: state
+        state,
     }
 }
 

@@ -34,6 +34,7 @@ kolayca değiştirebilirsiniz. Coffee.State bir fonksiyondur ve çalıştırdı�
 parametre olarak ilk state in değerlerini girersiniz ve state e yanlızca bir obje gönderilmelidir tüm 
 değişkenler bu obje içerisinde tutulamlıdır.  
 Öncelikle Coffee.State i bir değişkene atayıp bu değişkenden bağzı parçalar çıkarmalıyız.
+
 ```javascript
 const App = () => {
     const stateConsumer = Coffee.State({
@@ -69,9 +70,11 @@ Bu şekilde bir state oluşturduk ve state içerisinden bir değer aldık.
 peki bu değerleri nasıl güncelleyebiliriz?  
 stateConsumer değişkeninden aldığımız ``` setState ``` fonksiyonu ile yapabiliriz.
 aşağıdaki örnekte count değişkenini **setState()** ile arttıralım
-> setState e bir obje gönderilmeli.
+> setState e bir obje gönderilmelidir.
 Eğer setState e gönderdiğiniz objedeki değerler state de yoksa state e eklenir.  
 React.js class yapısındaki state ve setState mantığı ile neredeyse aynı kullanıma sahiptir.
+
+> **!!! her setState() de bir state değişkeni değiştirilmeli.**
 
 ```javascript
 const App = () => {
@@ -103,8 +106,21 @@ const App = () => {
     )
 }
 ```
+### history
+Eğer state üzerinde yapılan değişiklikleri görüntülemek isterseniz bir Coffee.State oluştururken
+ikinci parametreyi true verebilirsiniz
+```javascript
+const stateConsumer = Coffee.State({
+    title: 'Hello Coffee.js',
+    count: 0
+}, true)
+```
+history true girilirse console a değişiklikleri bir obje şeklinde bastırır
+```javascript
+{mode: "", variable: "", value: ""}
+```
+şeklinde konsola bastırılır.
 
----
 
 # Query
 Coffee.Query React.js de dinamik sorgularını daha düzenli ve etiketler ile yapabilmenizi sağlar.
@@ -125,7 +141,6 @@ Query nin aldığı mode prop u diğer içerisindeki çocukların query prop lar
 ```
 kısaca eğer mode hangi query e eşit se o çocuk ekrana bastırılır.
 
----
 
 # Component
 Component tool u eğer sadece bir, iki component render etmek istiyorsanız
@@ -147,7 +162,6 @@ değeri return eder.
 <Coffee.Component mode={viewMode} if={<FirstComponent />} else/>
 ```
 
----
 
 # Class
 ```Coffee.Class({})```  
