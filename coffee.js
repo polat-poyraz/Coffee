@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
-const promise = new Promise((resolve, reject) => { resolve(); reject() })
 
 class Query extends React.Component {
     constructor(props) {
         super()
+
         this.state = {
-            childs: {},
+            childs: {}
         }
     }
+
     querysResults = _ => {
         let result = []
+
         for (const prop in this.props.children){
             result.push(this.props.children[prop].props.query)
         }
         
         return result
     }
+
     componentDidMount() {
         const querys = this.querysResults()
 
@@ -34,8 +37,8 @@ class Query extends React.Component {
         }
 
         this.setState({ childs: childsResults() })
-
     }
+
     consumer() {
         for (let count in this.props.children) {
             if (this.state.childs[this.props.children[count].props.query] !== undefined) {
@@ -47,6 +50,7 @@ class Query extends React.Component {
             }
         }
     }
+
     render() {
         return <span> {this.consumer()} </span>
     }
@@ -80,36 +84,37 @@ const State = (getState, historyMode) => {
     const setState = (newState) => {
         const cloneState = {}
 
-        promise.then(() => {
-            for (const stateProp in state){
-                for (const newProp in newState){
-                    if (newProp !== stateProp){
-                        cloneState[stateProp] = state[stateProp]
-                    } else {
-                        cloneState[stateProp] = newState[newProp]
-                        if(historyMode)setHistory(newProp, 'update', newState[newProp])
-                    }
+        for (const stateProp in state){
+            for (const newProp in newState){
+                if (newProp !== stateProp){
+                    cloneState[stateProp] = state[stateProp]
+                } else {
+                    cloneState[stateProp] = newState[newProp]
 
-                    if (state[newProp] === undefined) {
-                        cloneState[newProp] = newState[newProp]
-                        if(historyMode)setHistory(newProp, 'add', newState[newProp])
+                    if(historyMode) {
+                        setHistory(newProp, 'update', newState[newProp])
+                    }
+                }
+
+                if (state[newProp] === undefined) {
+                    cloneState[newProp] = newState[newProp]
+
+                    if(historyMode) {
+                        setHistory(newProp, 'add', newState[newProp])
                     }
                 }
             }
-
-        }).then(() => {
-            updateState(cloneState)
-        })
+        }
+        
+        updateState(cloneState)
     }
 
     const setHistory = (propName, mode, value) => {
         const history = {}
         
-        history['mode'] = mode
-        history['variable'] = propName
-        history['value'] = value
-
-        console.log(history)
+        history.mode = mode
+        history.variable = propName
+        history.value = value
     }
 
     return {
@@ -118,11 +123,9 @@ const State = (getState, historyMode) => {
     }
 }
 
-const Coffee = {
+export default {
     Query,
     Component,
     Class,
     State
 }
-
-export default Coffee
